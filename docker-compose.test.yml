@@ -1,0 +1,6 @@
+version: "3.8"
+services:
+  app:
+    image: orchestranexus/orchestration-nexus-ui:latest
+    ports:
+      - "8080:80"

@@ -1,0 +1,85 @@
+{
+  "appType": "to-do",
+  "version": "1.0",
+  "phases": [
+    {
+      "id": "initialization",
+      "name": "Project Initialization",
+      "steps": [
+        {
+          "id": "welcome",
+          "description": "Welcome user and confirm intent to build to-do app",
+          "agentAction": "Greet user and explain the app-building process"
+        },
+        {
+          "id": "template-setup",
+          "description": "Initialize project with to-do list template",
+          "agentAction": "Set up basic project structure and explain components"
+        }
+      ]
+    },
+    {
+      "id": "ui-building",
+      "name": "UI Construction",
+      "steps": [
+        {
+          "id": "add-input",
+          "description": "Add text input for new tasks",
+          "agentAction": "Guide user to add and configure text input field"
+        },
+        {
+          "id": "add-button",
+          "description": "Add button to submit tasks",
+          "agentAction": "Guide user to add and configure submit button"
+        },
+        {
+          "id": "add-list",
+          "description": "Add task list display area",
+          "agentAction": "Guide user to add and configure list view component"
+        }
+      ]
+    },
+    {
+      "id": "logic-implementation",
+      "name": "Logic Implementation",
+      "steps": [
+        {
+          "id": "input-logic",
+          "description": "Define logic to capture input text",
+          "agentAction": "Guide user to set up input handling"
+        },
+        {
+          "id": "button-logic",
+          "description": "Define logic to append input to task list",
+          "agentAction": "Guide user to connect button to list update"
+        },
+        {
+          "id": "list-logic",
+          "description": "Implement task list rendering with checkboxes",
+          "agentAction": "Guide user to set up list display and checkbox functionality"
+        }
+      ]
+    },
+    {
+      "id": "testing",
+      "name": "Testing & Preview",
+      "steps": [
+        {
+          "id": "preview",
+          "description": "Switch to preview mode",
+          "agentAction": "Guide user to test the application"
+        },
+        {
+          "id": "testing",
+          "description": "Test core functionality",
+          "agentAction": "Help user verify all features work correctly"
+        },
+        {
+          "id": "troubleshooting",
+          "description": "Address any issues",
+          "agentAction": "Provide guidance for fixing common problems"
+        }
+      ]
+    }
+  ]
+} 

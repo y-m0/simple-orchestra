@@ -1,0 +1,20 @@
+{
+  "states": [
+    {
+      "id": "start",
+      "description": "Welcome user and confirm intent to build to-do app"
+    },
+    {
+      "id": "add-task-input",
+      "description": "Guide to add and name text input"
+    },
+    {
+      "id": "add-button",
+      "description": "Guide to add button and link logic to input"
+    },
+    {
+      "id": "preview-mode",
+      "description": "Guide to switch to preview and test"
+    }
+  ]
+} 

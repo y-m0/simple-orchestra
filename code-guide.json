@@ -1,0 +1,86 @@
+{
+  "projectName": "Orchestration Nexus UI",
+  "description": "A frontend for an enterprise agentic orchestration platform enabling users to build, execute, and monitor AI-driven workflows through agents and LLMs.",
+
+  "techStack": {
+    "framework": "Next.js + TypeScript",
+    "styling": "TailwindCSS",
+    "stateManagement": "Zustand",
+    "testing": ["Jest", "Cypress"],
+    "dataLayer": "tRPC / REST API",
+    "llmIntegration": "OpenAI / Claude / Groq API"
+  },
+
+  "structure": {
+    "pages": {
+      "dashboard": "Overview of system activity and Workflow Activity Log (mirrored from Activity Log)",
+      "workflows": "Interface to create and execute multi-agent, multi-step workflows.",
+      "agent-directory": "Directory of AI agents with profiles, roles, and execution capabilities.",
+      "activity-log": "Chronological event stream with filters for workflows, agents, and results.",
+      "settings": "Manage data connections, API keys, agents, and integrations."
+    },
+    "components": "Reusable components under `components/` for logs, modals, buttons, etc.",
+    "hooks": "Reusable logic (e.g. `useWorkflowRun`, `useAgentData`) stored in `hooks/`.",
+    "store": "Global state managed with Zustand in `store/`.",
+    "types": "TypeScript definitions in `types/`.",
+    "utils": "Helper functions in `lib/`."
+  },
+
+  "conventions": {
+    "naming": "camelCase for variables/functions, PascalCase for components",
+    "folders": "Colocate features and UI under `features/` (e.g., `features/workflows`)",
+    "imports": "Use absolute paths with `@/` alias",
+    "styling": {
+      "theme": "Dark mode dashboard with Tailwind — use standard spacing, rounded corners, shadow-md for cards",
+      "buttons": "Primary buttons in blue, secondary in slate/gray"
+    },
+    "testing": {
+      "unit": "Use Jest for logic-heavy components",
+      "integration": "Use Cypress for full user flows (e.g. create > run > log > edit)",
+      "coverageGoal": "Aim for 80%+ test coverage"
+    }
+  },
+
+  "features": {
+    "workflowActivityLog": {
+      "location": "Visible on Dashboard only (not on separate page)",
+      "dataSource": "workflowRuns / logs store",
+      "linkedTo": "Activity Log layout and filters",
+      "goal": "Show recent workflow execution history consistently"
+    },
+    "llmExecution": {
+      "apiRoute": "/api/run-workflow",
+      "inputs": "Workflow steps, context, agent ID, data source refs",
+      "outputs": "LLM response per step, execution metadata, status",
+      "dependencies": ["OpenAI API", "Active Agents", "Linked Data"]
+    },
+    "dataConnections": {
+      "location": "Settings → Data Connections",
+      "functions": ["Preview schema", "Tag connections", "Toggle live sync"],
+      "todoEnhancements": ["Allow OAuth integration", "Test schema resolution pipeline"]
+    }
+  },
+
+  "todos": [
+    "✅ Add Workflow Activity Log to Dashboard matching Activity Log layout",
+    "🔧 Ensure workflows executed via LLM show correctly in both logs (Activity & Dashboard)",
+    "🛠 Refactor WorkflowCard to share styles with AgentCard and LogItem",
+    "🧪 Add unit tests for workflow-run summary component and log renderer",
+    "🛠 Validate settings/Data Connections sync with schema preview endpoint",
+    "🚀 Enable workflow scheduling or webhook triggers in future release",
+    "🔒 Add user permission settings for who can edit/run/delete workflows",
+    "🧹 Refactor duplicated logging code between Activity Log and Dashboard feed",
+    "🧠 Implement OpenAI error handling (timeouts, retries, user feedback)",
+    "📦 Integrate shared log filter component into both Dashboard and Activity Log",
+    "✅ Add fallback UI when no workflows exist yet on a fresh install",
+    "📊 Cache previously run workflows for analytics / success rates"
+  ],
+
+  "bestPractices": [
+    "Keep workflow logic composable and decoupled from the UI",
+    "Always test LLM calls in dev mode using mock inputs",
+    "Use shared types and logs between all activity feeds for consistency",
+    "Ensure new features degrade gracefully (e.g. no data connection = disabled workflows)",
+    "Track all LLM executions and errors for observability"
+  ]
+} 

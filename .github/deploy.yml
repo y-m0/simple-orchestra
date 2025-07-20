@@ -1,0 +1,31 @@
+name: Deploy to Docker Hub
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build the application
+        run: npm run build
+
+      - name: Build and push Docker image
+        run: |
+          docker build -t YOUR_DOCKERHUB_USERNAME/YOUR_IMAGE_NAME .
+          docker login -u YOUR_DOCKERHUB_USERNAME -p ${{ secrets.DOCKERHUB_TOKEN }}
+          docker push YOUR_DOCKERHUB_USERNAME/YOUR_IMAGE_NAME
