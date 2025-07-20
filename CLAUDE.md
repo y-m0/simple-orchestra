@@ -47,7 +47,7 @@ If you need to do X operations, they should be in 1 message, not X messages
   mcp__claude-flow__agent_spawn { type: "analyst" }
   mcp__claude-flow__agent_spawn { type: "tester" }
   mcp__claude-flow__agent_spawn { type: "coordinator" }
-  TodoWrite { todos: [todo1, todo2, todo3, todo4, todo5] }
+  TaskWrite { tasks: [task1, task2, task3, task4, task5] }
   Bash "mkdir -p app/{src,tests,docs}"
   Write "app/package.json" 
   Write "app/README.md"
@@ -59,7 +59,7 @@ If you need to do X operations, they should be in 1 message, not X messages
 Message 1: mcp__claude-flow__swarm_init
 Message 2: mcp__claude-flow__agent_spawn 
 Message 3: mcp__claude-flow__agent_spawn
-Message 4: TodoWrite (one todo)
+Message 4: TaskWrite (one task)
 Message 5: Bash "mkdir src"
 Message 6: Write "package.json"
 // This is 6x slower and breaks parallel coordination!
@@ -399,7 +399,7 @@ Message 2: [BatchTool]
   - Write file2.js
   - Write file3.js
   - Bash mkdir commands
-  - TodoWrite updates
+  - TaskWrite updates
 ```
 
 ### 🎯 MANDATORY SWARM PATTERN
@@ -417,7 +417,7 @@ STEP 1: IMMEDIATE PARALLEL SPAWN (Single Message!)
   - mcp__claude-flow__agent_spawn { type: "tester", name: "QA Engineer" }
   - mcp__claude-flow__agent_spawn { type: "researcher", name: "Tech Lead" }
   - mcp__claude-flow__agent_spawn { type: "coordinator", name: "PM" }
-  - TodoWrite { todos: [multiple todos at once] }
+  - TaskWrite { tasks: [multiple tasks at once] }
 
 STEP 2: PARALLEL TASK EXECUTION (Single Message!)
 [BatchTool]:
@@ -475,8 +475,8 @@ Dependencies: ↳ X deps | Actionable: ▶
   mcp__claude-flow__agent_spawn { type: "tester", name: "Test Engineer" }
   mcp__claude-flow__agent_spawn { type: "coordinator", name: "Lead" }
   
-  // Update ALL todos at once
-  TodoWrite { todos: [
+  // Update ALL tasks at once
+  TaskWrite { tasks: [
     { id: "design", content: "Design API architecture", status: "in_progress", priority: "high" },
     { id: "auth", content: "Implement authentication", status: "pending", priority: "high" },
     { id: "db", content: "Design database schema", status: "pending", priority: "high" },
@@ -521,7 +521,7 @@ Dependencies: ↳ X deps | Actionable: ▶
 Message 1: mcp__claude-flow__swarm_init
 Message 2: mcp__claude-flow__agent_spawn (just one agent)
 Message 3: mcp__claude-flow__agent_spawn (another agent)
-Message 4: TodoWrite (single todo)
+Message 4: TaskWrite (single task)
 Message 5: Write (single file)
 // This is 5x slower and wastes swarm coordination!
 ```

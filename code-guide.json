@@ -1,14 +1,15 @@
 {
-  "projectName": "Orchestration Nexus UI",
-  "description": "A frontend for an enterprise agentic orchestration platform enabling users to build, execute, and monitor AI-driven workflows through agents and LLMs.",
+  "projectName": "Simple Orchestra",
+  "description": "A production-ready orchestration platform enabling users to build, execute, and monitor AI-driven workflows through agents and LLMs.",
 
   "techStack": {
-    "framework": "Next.js + TypeScript",
-    "styling": "TailwindCSS",
+    "framework": "React 18 + TypeScript + Vite",
+    "styling": "Tailwind CSS + Radix UI",
     "stateManagement": "Zustand",
-    "testing": ["Jest", "Cypress"],
-    "dataLayer": "tRPC / REST API",
-    "llmIntegration": "OpenAI / Claude / Groq API"
+    "testing": ["Jest", "React Testing Library"],
+    "dataLayer": "REST API",
+    "llmIntegration": "Claude Flow integration",
+    "authentication": "Mock authentication system"
   },
 
   "structure": {
@@ -57,11 +58,11 @@
     "dataConnections": {
       "location": "Settings → Data Connections",
       "functions": ["Preview schema", "Tag connections", "Toggle live sync"],
-      "todoEnhancements": ["Allow OAuth integration", "Test schema resolution pipeline"]
+      "enhancements": ["Allow OAuth integration", "Test schema resolution pipeline"]
     }
   },
 
-  "todos": [
+  "enhancements": [
     "✅ Add Workflow Activity Log to Dashboard matching Activity Log layout",
     "🔧 Ensure workflows executed via LLM show correctly in both logs (Activity & Dashboard)",
     "🛠 Refactor WorkflowCard to share styles with AgentCard and LogItem",
@@ -70,7 +71,7 @@
     "🚀 Enable workflow scheduling or webhook triggers in future release",
     "🔒 Add user permission settings for who can edit/run/delete workflows",
     "🧹 Refactor duplicated logging code between Activity Log and Dashboard feed",
-    "🧠 Implement OpenAI error handling (timeouts, retries, user feedback)",
+    "🧠 Implement Claude Flow error handling (timeouts, retries, user feedback)",
     "📦 Integrate shared log filter component into both Dashboard and Activity Log",
     "✅ Add fallback UI when no workflows exist yet on a fresh install",
     "📊 Cache previously run workflows for analytics / success rates"

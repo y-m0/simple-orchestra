@@ -1,114 +1,139 @@
-# Deployment and Hosting
-- deployed via release to dockerhub
-- hosted on google cloud run 
+# Simple Orchestra
 
-## What technologies are used for this project?
+A production-ready orchestration platform built with React, TypeScript, and modern web technologies. Simple Orchestra provides a comprehensive workflow management system with AI-powered orchestration capabilities.
 
-This project is built with:
+## Features
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- **Modern Architecture**: Built with React 18, TypeScript, and Vite for optimal performance
+- **Workflow Management**: Create, execute, and monitor complex workflows
+- **Agent Directory**: Manage AI agents with profiles, roles, and execution capabilities
+- **Dashboard**: Real-time overview of system activity and workflow execution
+- **Mock Authentication**: Lightweight authentication system without external dependencies
+- **Code Splitting**: Optimized bundle loading with lazy components
+- **Error Boundaries**: Robust error handling for production reliability
 
-<<<<<<< HEAD
-## How can I deploy this project?
+## Technologies Used
 
-Simply open [Lovable](https://lovable.dev/projects/30c6645e-b7eb-45d5-a467-3c279f2230c5) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
-
-## 🧠 Codeless (Subproject)
-
-A guided, agent-powered app-building experience for non-technical users.
-
-📁 Location: `/apps/codeless`  
-🔖 Version: 1.0 (MVP)  
-🎯 Target: Interactive, AI-guided "To-Do List App" builder
-
-➡️ See `/apps/codeless/prd/v1.0.md` for product details.
-
-# Codeless
-
-An interactive, agent-assisted platform that guides non-technical individuals through the process of building simple web or mobile applications.
-
-## Overview
-
-Codeless democratizes app creation by providing an intelligent, conversational mentor that breaks down complex development tasks into understandable, actionable steps.
+- **React 18** - Modern React with hooks and concurrent features
+- **TypeScript** - Type-safe development
+- **Vite** - Fast build tool and development server
+- **Tailwind CSS** - Utility-first CSS framework
+- **Radix UI** - Accessible component primitives
+- **React Router** - Client-side routing
+- **Zustand** - Lightweight state management
 
 ## Project Structure
 
 ```
-codeless/
-├── agent-specs/     # AI agent specifications and capabilities
-├── prd/            # Product Requirements Documents
-├── prototypes/     # UI/UX prototypes and flows
-└── workflows/      # Application building workflows
+simple-orchestra/
+├── src/
+│   ├── components/       # Reusable UI components
+│   ├── pages/           # Application pages/routes
+│   ├── lib/             # Utilities and core logic
+│   ├── hooks/           # Custom React hooks
+│   ├── types/           # TypeScript type definitions
+│   └── services/        # API services and external integrations
+├── public/              # Static assets
+└── dist/               # Production build output
 ```
-
-## Current Status
-
-Version: 1.0 (MVP)
-Target: Interactive, AI-guided "To-Do List App" builder
-
-## Documentation
-
-- [Product Requirements Document](prd/v1.0.md)
-- [Build Agent Specification](agent-specs/build-agent.md)
-- [To-Do App Workflow](workflows/to-do-app.json)
-- [Guided UI Flow](prototypes/guided-ui.flow.json)
 
 ## Getting Started
 
-1. Clone the repository
-2. Review the PRD and agent specifications
-3. Follow the workflow documentation to understand the app-building process
+### Prerequisites
+
+- Node.js 20+ (LTS recommended)
+- npm or yarn package manager
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/y-m0/simple-orchestra.git
+cd simple-orchestra
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+4. Open http://localhost:5173 in your browser
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+The built application will be in the `dist/` directory.
+
+## Deployment
+
+### Docker
+
+Build and run with Docker:
+```bash
+docker build -t simple-orchestra .
+docker run -p 3000:3000 simple-orchestra
+```
+
+### Cloud Platforms
+
+Simple Orchestra can be deployed to any static hosting platform:
+- Vercel
+- Netlify  
+- Google Cloud Run
+- AWS S3 + CloudFront
+
+## Claude Flow Integration
+
+This project integrates with [Claude Flow](https://github.com/ruvnet/claude-flow) for AI-powered orchestration, agent-based task management, and workflow monitoring.
+
+### Setup
+1. Install and run Claude Flow as a service
+2. Update `CLAUDE_FLOW_API_URL` in `src/services/claudeFlowApi.ts` if your Claude Flow server is not on `localhost:3001`
+
+### Key Components
+- **ClaudeFlowDashboard**: Shows orchestration/workflow status
+- **ClaudeFlowTaskTrigger**: Trigger new orchestration tasks  
+- **ClaudeFlowStatus**: Real-time agent/task progress
+- **ClaudeFlowSecurity**: Security & compliance results
+
+### Example Workflow
+1. User logs in to Simple Orchestra
+2. User triggers an orchestration task (e.g., "Deploy Microservice")
+3. Frontend sends request to Claude Flow to spawn appropriate agents
+4. Claude Flow agents execute tasks (deploy, monitor, summarize, secure)
+5. Frontend displays real-time progress and results
+
+## Authentication
+
+Simple Orchestra includes a mock authentication system for development and demonstration purposes. For production use, replace with your preferred authentication provider.
+
+## Performance Optimizations
+
+- **Bundle Splitting**: Main bundle optimized to 574KB with 42 additional chunks
+- **Lazy Loading**: Components loaded on-demand to reduce initial bundle size
+- **Error Boundaries**: Graceful error handling prevents application crashes
+- **Type Safety**: Full TypeScript coverage prevents runtime errors
 
 ## Contributing
 
-Please read our contributing guidelines before submitting pull requests.
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/new-feature`
+3. Commit changes: `git commit -am 'Add new feature'`
+4. Push to branch: `git push origin feature/new-feature`
+5. Submit a pull request
 
 ## License
 
-[Add appropriate license information]
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Claude-Flow Integration
+## Support
 
-This project integrates with [Claude-Flow](https://github.com/ruvnet/claude-flow) for AI-powered orchestration, agent-based task management, and workflow monitoring.
-
-### Setup
-1. Install and run Claude-Flow as a service (see their documentation).
-2. Update `CLAUDE_FLOW_API_URL` in `src/services/claudeFlowApi.ts` if your Claude-Flow server is not on `localhost:3001`.
-
-### API Service
-- `src/services/claudeFlowApi.ts` provides methods to:
-  - Get workflow status
-  - Trigger orchestration tasks
-  - Fetch security/compliance results
-
-### UI Components
-- `ClaudeFlowDashboard`: Shows orchestration/workflow status
-- `ClaudeFlowTaskTrigger`: Trigger new orchestration tasks
-- `ClaudeFlowStatus`: Real-time agent/task progress
-- `ClaudeFlowSecurity`: Security & compliance results
-
-These are integrated into the main dashboard UI.
-
-### Example User Flow
-1. User logs in to Orchestra Nexus UI.
-2. User triggers an orchestration task (e.g., "Deploy Microservice").
-3. Frontend sends a request to Claude-Flow to spawn the appropriate agents.
-4. Claude-Flow agents execute tasks (deploy, monitor, summarize, secure).
-5. Frontend polls or subscribes to workflow status and displays real-time progress.
-6. User sees results, logs, and security/compliance feedback in the dashboard.
-
-See the Claude-Flow repo for more details on agent and workflow configuration.
-=======
->>>>>>> 433d3f9a2dea035a299a6f2fc335498cbcae4e9e
+For questions and support, please open an issue on GitHub or contact the maintainers.
