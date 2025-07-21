@@ -4,6 +4,7 @@ import { AuthProvider } from '@/lib/auth/AuthContext';
 import { ThemeProvider } from '@/components/theme/ThemeProvider';
 import { Toaster } from '@/components/ui/toaster';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
+import GlobalErrorBoundary from '@/components/error/GlobalErrorBoundary';
 
 // Landing and Auth Pages
 import Index from '@/pages/Index';
@@ -26,8 +27,9 @@ import NotFound from '@/pages/NotFound';
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="orchestration-ui-theme">
-      <AuthProvider>
+    <GlobalErrorBoundary>
+      <ThemeProvider defaultTheme="system" storageKey="orchestration-ui-theme">
+        <AuthProvider>
         <Router>
           <div className="min-h-screen bg-background text-foreground">
             <Routes>
@@ -102,8 +104,9 @@ function App() {
             <Toaster />
           </div>
         </Router>
-      </AuthProvider>
-    </ThemeProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </GlobalErrorBoundary>
   );
 }
 
