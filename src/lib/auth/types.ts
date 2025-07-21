@@ -33,6 +33,18 @@ export interface AuthError {
   details?: Record<string, unknown>;
 }
 
+export class AuthError extends Error {
+  public code: string;
+  public details?: Record<string, unknown>;
+
+  constructor(code: string, message: string, details?: Record<string, unknown>) {
+    super(message);
+    this.name = 'AuthError';
+    this.code = code;
+    this.details = details;
+  }
+}
+
 export interface AuthContextType {
   user: User | null;
   session: AuthSession | null;
