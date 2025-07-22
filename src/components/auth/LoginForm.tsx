@@ -78,7 +78,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
       {error && (
         <div className="bg-destructive/10 text-destructive p-3 rounded-md text-sm">
-          {error}
+          {typeof error === 'string' ? error : error.message || 'An error occurred'}
         </div>
       )}
 
