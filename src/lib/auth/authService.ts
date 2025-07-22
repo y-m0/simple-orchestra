@@ -1,6 +1,16 @@
-// Secure authentication service
+// Secure authentication service with mock implementation
 
 import { AuthConfig, User, AuthSession, LoginCredentials, SignupCredentials, AuthError } from './types';
+
+// Mock user database
+const mockUsers = new Map<string, { email: string; password: string; name: string; id: string }>([
+  ['test@example.com', { 
+    email: 'test@example.com', 
+    password: 'password', 
+    name: 'Test User',
+    id: 'user-1'
+  }]
+]);
 
 class AuthService {
   private config: AuthConfig;
@@ -12,27 +22,32 @@ class AuthService {
 
   async login(credentials: LoginCredentials): Promise<AuthSession> {
     try {
-      const response = await fetch(`${this.config.apiUrl}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: credentials.email.toLowerCase().trim(),
-          password: credentials.password,
-        }),
-      });
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 500));
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new AuthError(
-          errorData.code || 'AUTH_ERROR',
-          errorData.message || 'Authentication failed'
-        );
+      const email = credentials.email.toLowerCase().trim();
+      const mockUser = mockUsers.get(email);
+
+      if (!mockUser || mockUser.password !== credentials.password) {
+        throw new AuthError('INVALID_CREDENTIALS', 'Invalid email or password');
       }
 
-      const sessionData = await response.json();
-      const session = this.validateSession(sessionData);
+      // Create mock session
+      const session: AuthSession = {
+        access_token: `mock_token_${Date.now()}`,
+        refresh_token: `mock_refresh_${Date.now()}`,
+        expires_at: Date.now() + (24 * 60 * 60 * 1000), // 24 hours
+        user: {
+          id: mockUser.id,
+          email: mockUser.email,
+          name: mockUser.name,
+          role: 'user',
+          avatar: undefined,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          email_verified: true,
+        },
+      };
       
       this.storeSession(session);
       this.scheduleTokenRefresh(session);
@@ -84,46 +99,37 @@ class AuthService {
 
   async signup(credentials: SignupCredentials): Promise<void> {
     try {
-      const response = await fetch(`${this.config.apiUrl}/auth/signup`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: credentials.email.toLowerCase().trim(),
-          password: credentials.password,
-          name: credentials.name?.trim(),
-        }),
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      const email = credentials.email.toLowerCase().trim();
+      
+      if (mockUsers.has(email)) {
+        throw new AuthError('EMAIL_EXISTS', 'An account with this email already exists');
+      }
+
+      // Add new user to mock database
+      mockUsers.set(email, {
+        email,
+        password: credentials.password,
+        name: credentials.name || 'User',
+        id: `user-${Date.now()}`
       });
 
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new AuthError(
-          errorData.code || 'SIGNUP_ERROR',
-          errorData.message || 'Account creation failed'
-        );
-      }
     } catch (error) {
       if (error instanceof AuthError) {
         throw error;
       }
-      throw new AuthError('NETWORK_ERROR', 'Failed to connect to authentication service');
+      throw new AuthError('NETWORK_ERROR', 'Account creation failed');
     }
   }
 
   async logout(): Promise<void> {
     try {
-      const session = this.getStoredSession();
-      if (session) {
-        await fetch(`${this.config.apiUrl}/auth/logout`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${session.access_token}`,
-          },
-        }).catch(() => {
-          // Ignore logout errors - clear local session anyway
-        });
-      }
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 200));
+      
+      // Mock logout always succeeds
     } finally {
       this.clearSession();
     }
@@ -151,22 +157,16 @@ class AuthService {
     }
 
     try {
-      const response = await fetch(`${this.config.apiUrl}/auth/refresh`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          refresh_token: session.refresh_token,
-        }),
-      });
+      // Simulate network delay
+      await new Promise(resolve => setTimeout(resolve, 300));
 
-      if (!response.ok) {
-        throw new AuthError('REFRESH_FAILED', 'Token refresh failed');
-      }
-
-      const newSessionData = await response.json();
-      const newSession = this.validateSession(newSessionData);
+      // Create new mock session
+      const newSession: AuthSession = {
+        ...session,
+        access_token: `mock_token_${Date.now()}`,
+        refresh_token: `mock_refresh_${Date.now()}`,
+        expires_at: Date.now() + (24 * 60 * 60 * 1000), // 24 hours
+      };
       
       this.storeSession(newSession);
       this.scheduleTokenRefresh(newSession);
