@@ -1,6 +1,6 @@
-# Simple Orchestra
+# Orchestra
 
-A production-ready orchestration platform built with React, TypeScript, and modern web technologies. Simple Orchestra provides a comprehensive workflow management system with AI-powered orchestration capabilities.
+A production-ready orchestration platform built with React, TypeScript, and modern web technologies. Orchestra provides a comprehensive workflow management system with AI-powered orchestration capabilities.
 
 ## Features
 
@@ -48,8 +48,8 @@ simple-orchestra/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/y-m0/simple-orchestra.git
-cd simple-orchestra
+git clone https://github.com/y-m0/orchestra.git
+cd orchestra
 ```
 
 2. Install dependencies:
@@ -84,7 +84,7 @@ docker run -p 3000:3000 simple-orchestra
 
 ### Cloud Platforms
 
-Simple Orchestra can be deployed to any static hosting platform:
+Orchestra can be deployed to any static hosting platform:
 - Vercel
 - Netlify  
 - Google Cloud Run
@@ -105,7 +105,7 @@ This project integrates with [Claude Flow](https://github.com/ruvnet/claude-flow
 - **ClaudeFlowSecurity**: Security & compliance results
 
 ### Example Workflow
-1. User logs in to Simple Orchestra
+1. User logs in to Orchestra
 2. User triggers an orchestration task (e.g., "Deploy Microservice")
 3. Frontend sends request to Claude Flow to spawn appropriate agents
 4. Claude Flow agents execute tasks (deploy, monitor, summarize, secure)
@@ -113,7 +113,7 @@ This project integrates with [Claude Flow](https://github.com/ruvnet/claude-flow
 
 ## Authentication
 
-Simple Orchestra includes a mock authentication system for development and demonstration purposes. For production use, replace with your preferred authentication provider.
+Orchestra includes a mock authentication system for development and demonstration purposes. For production use, replace with your preferred authentication provider.
 
 ## Performance Optimizations
 

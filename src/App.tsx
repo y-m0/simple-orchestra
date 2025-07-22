@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { AuthProvider } from '@/lib/auth/AuthContext';
-import { ThemeProvider } from '@/components/theme/ThemeProvider';
+import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/toaster';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import GlobalErrorBoundary from '@/components/error/GlobalErrorBoundary';
@@ -35,7 +35,7 @@ const PageLoader = () => (
 function App() {
   return (
     <GlobalErrorBoundary>
-      <ThemeProvider defaultTheme="system" storageKey="orchestration-ui-theme">
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <div className="min-h-screen bg-background text-foreground">
           <Toaster />
           <AuthProvider>
