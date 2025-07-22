@@ -37,7 +37,7 @@ export default function Projects() {
     });
     // Ensure one project per status (active, completed, archived) for the example
     const requiredStatuses: ("active" | "completed" | "archived")[] = ["active", "completed", "archived"];
-    let projectsWithDetails = [...allProjects];
+    const projectsWithDetails = [...allProjects];
     requiredStatuses.forEach(status => {
       if (!projectsWithDetails.some(p => p.status === status)) {
         projectsWithDetails.push({

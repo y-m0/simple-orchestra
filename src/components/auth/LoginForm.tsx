@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,7 +23,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     e.preventDefault();
 
     try {
-      await login(credentials.email, credentials.password);
+      await login(credentials);
       navigate("/dashboard");
     } catch (error) {
       console.error("Login error:", error);
@@ -63,13 +63,17 @@ export const LoginForm: React.FC<LoginFormProps> = ({
             placeholder="Enter your password"
             value={credentials.password}
             onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-            className="pl-10 bg-background/60 backdrop-blur-sm border-purple-500/30"
+            className="pl-10 pr-12 bg-background/60 backdrop-blur-sm border-purple-500/30"
+            aria-describedby={error ? "password-error" : undefined}
+            aria-invalid={!!error}
             required
           />
           <button 
             type="button"
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-xs"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-xs hover:text-foreground focus:outline-none focus:ring-2 focus:ring-purple-500 rounded px-1"
             onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+            aria-pressed={showPassword}
           >
             {showPassword ? "Hide" : "Show"}
           </button>
@@ -77,8 +81,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({
       </div>
 
       {error && (
-        <div className="bg-destructive/10 text-destructive p-3 rounded-md text-sm">
-          {error}
+        <div 
+          id="password-error" 
+          role="alert" 
+          className="bg-destructive/10 text-destructive p-3 rounded-md text-sm"
+          aria-live="polite"
+        >
+          {String(error)}
         </div>
       )}
 

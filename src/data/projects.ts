@@ -94,7 +94,7 @@ export const initialProjects: Project[] = [
 ];
 
 // Mock database functions
-let projects = [...initialProjects];
+const projects = [...initialProjects];
 
 export const getProjects = () => [...projects];
 

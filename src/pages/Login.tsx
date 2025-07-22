@@ -67,13 +67,13 @@ export default function Login() {
                 <div className="text-muted-foreground mt-1 text-xs">Agent status & metrics</div>
               </Link>
               <Link 
-                to="/workflows" 
+                to="/workflow-builder" 
                 className="p-3 border border-border/50 rounded-md hover:bg-accent/50 transition-colors text-center flex flex-col items-center justify-center space-y-2 group"
               >
                 <Workflow 
                   className="h-6 w-6 text-purple-400 group-hover:text-purple-300 transition-colors" 
                 />
-                <div className="text-purple-400 font-medium group-hover:text-purple-300 transition-colors">Workflows</div>
+                <div className="text-purple-400 font-medium group-hover:text-purple-300 transition-colors">Workflow Builder</div>
                 <div className="text-muted-foreground mt-1 text-xs">LLM agent orchestration</div>
               </Link>
               <Link 

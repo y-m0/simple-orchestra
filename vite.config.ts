@@ -5,13 +5,11 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   server: {
-    host: '0.0.0.0',
-    port: 8080,
+    host: 'localhost',
+    port: 3000,
     strictPort: false,
+    open: true,
     cors: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-    },
   },
   plugins: [react()],
   resolve: {
@@ -21,8 +19,23 @@ export default defineConfig({
   },
   build: {
     sourcemap: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          ui: ['@radix-ui/react-accordion', '@radix-ui/react-alert-dialog', '@radix-ui/react-avatar', '@radix-ui/react-checkbox'],
+          charts: ['recharts'],
+          router: ['react-router-dom'],
+          flow: ['reactflow'],
+          animation: ['framer-motion'],
+        }
+      }
+    },
+    target: 'esnext',
+    minify: 'esbuild',
+    chunkSizeWarningLimit: 500
   },
   optimizeDeps: {
-    include: ['react', 'react-dom'],
+    include: ['react', 'react-dom', 'react-router-dom', 'zustand', 'lucide-react'],
   },
 })

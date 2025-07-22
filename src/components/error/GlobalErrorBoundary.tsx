@@ -64,7 +64,7 @@ class GlobalErrorBoundary extends Component<Props, State> {
     };
 
     // Log to console in development
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.group('🚨 Error Boundary Caught Error');
       console.error('Error:', error);
       console.error('Error Info:', errorInfo);
@@ -73,7 +73,7 @@ class GlobalErrorBoundary extends Component<Props, State> {
     }
 
     // In production, send to error reporting service
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       this.reportError(errorData).catch(console.error);
     }
   };
@@ -170,7 +170,7 @@ class GlobalErrorBoundary extends Component<Props, State> {
             </CardHeader>
             
             <CardContent className="space-y-4">
-              {process.env.NODE_ENV === 'development' && (
+              {import.meta.env.DEV && (
                 <Alert>
                   <Bug className="h-4 w-4" />
                   <AlertDescription className="font-mono text-xs">
@@ -210,7 +210,7 @@ class GlobalErrorBoundary extends Component<Props, State> {
                 </Button>
               </div>
 
-              {process.env.NODE_ENV === 'development' && (
+              {import.meta.env.DEV && (
                 <Button 
                   variant="ghost" 
                   size="sm"
@@ -258,12 +258,12 @@ export function useErrorReporting() {
       url: window.location.href,
     };
 
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.error('Manual Error Report:', errorData);
     }
 
     // Report to error service in production
-    if (process.env.NODE_ENV === 'production') {
+    if (import.meta.env.PROD) {
       fetch('/api/errors', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

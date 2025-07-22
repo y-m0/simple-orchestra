@@ -126,7 +126,7 @@ export function ActivityTimeline({
       else if (activity.type.includes('tool')) type = 'tool';
       
       // Convert complex details to string if necessary
-      let description: string = typeof activity.details === 'string' 
+      const description: string = typeof activity.details === 'string' 
         ? activity.details 
         : JSON.stringify(activity.details);
       

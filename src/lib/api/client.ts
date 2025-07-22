@@ -13,7 +13,7 @@ class ApiClient {
       retries: 3,
       retryDelay: 1000,
       headers: {},
-      baseURL: process.env.REACT_APP_API_URL || 'http://localhost:3001/api',
+      baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3001/api',
       authTokenKey: 'simple_orchestra_auth',
       onUnauthorized: () => {},
       onError: () => {},
