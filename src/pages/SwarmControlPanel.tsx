@@ -778,7 +778,6 @@ export default function SwarmControlPanel() {
               <p className="text-muted-foreground mb-6">
                 Select a swarm from the dropdown above to view its real-time dashboard and metrics.
               </p>
-              <Button onClick={() => navigate('/workflow-builder')}>
               <Button onClick={() => navigate('/workflow-builder')} className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg hover:shadow-purple-500/25">
                 <Workflow className="w-4 h-4 mr-2" />
                 Create New Workflow
