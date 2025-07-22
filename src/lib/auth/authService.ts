@@ -235,7 +235,7 @@ class AuthError extends Error {
 
 // Export configured service instance
 const authConfig: AuthConfig = {
-  apiUrl: process.env.REACT_APP_API_URL || 'http://localhost:3001/api',
+  apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:3001/api',
   tokenStorageKey: 'simple_orchestra_auth',
   sessionExpiryBuffer: 5 * 60 * 1000, // 5 minutes
 };
