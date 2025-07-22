@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { 
   Activity, 
@@ -17,12 +17,11 @@ import {
   Bell,
   Menu,
   X,
-  ChevronDown,
   TrendingUp,
   Server,
-  Database,
+  ArrowLeft,
   Cpu,
-  ArrowLeft
+  Database
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -129,11 +128,11 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ icon, label, value, status, trend, subtitle }) => (
-  <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-purple-500">
+  <Card className="hover:shadow-lg transition-all duration-300 border-l-4 border-l-purple-500 bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-900 dark:to-purple-950/30">
     <CardContent className="p-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl text-white shadow-lg">
+          <div className="p-3 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl text-white shadow-lg hover:shadow-purple-500/25 transition-shadow">
             {icon}
           </div>
           <div>
@@ -167,9 +166,9 @@ interface HealthStatusProps {
 
 const HealthStatus: React.FC<HealthStatusProps> = ({ uptime, metrics }) => {
   const getHealthColor = (uptime: number) => {
-    if (uptime >= 95) return 'bg-green-500';
-    if (uptime >= 80) return 'bg-yellow-500';
-    return 'bg-red-500';
+    if (uptime >= 95) return 'from-green-400 to-green-600';
+    if (uptime >= 80) return 'from-yellow-400 to-yellow-600';
+    return 'from-red-400 to-red-600';
   };
 
   const getHealthLabel = (uptime: number) => {
@@ -179,10 +178,10 @@ const HealthStatus: React.FC<HealthStatusProps> = ({ uptime, metrics }) => {
   };
 
   return (
-    <Card className="border-l-4 border-l-green-500">
+    <Card className="border-l-4 border-l-green-500 bg-gradient-to-br from-white to-green-50/30 dark:from-gray-900 dark:to-green-950/30">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg flex items-center gap-2">
-          <div className={`w-3 h-3 rounded-full ${getHealthColor(uptime)} animate-pulse`}></div>
+          <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${getHealthColor(uptime)} animate-pulse shadow-lg`}></div>
           System Health
         </CardTitle>
       </CardHeader>
@@ -195,7 +194,7 @@ const HealthStatus: React.FC<HealthStatusProps> = ({ uptime, metrics }) => {
             </div>
             <div className="w-full bg-gray-200 rounded-full h-2">
               <div 
-                className={`h-2 rounded-full transition-all duration-500 ${getHealthColor(uptime)}`}
+                className={`h-2 rounded-full transition-all duration-500 bg-gradient-to-r ${getHealthColor(uptime)} shadow-sm`}
                 style={{ width: `${uptime}%` }}
               ></div>
             </div>
@@ -225,7 +224,7 @@ interface SwarmSwitcherProps {
 }
 
 const SwarmSwitcher: React.FC<SwarmSwitcherProps> = ({ selectedSwarm, onSwarmChange, swarms }) => (
-  <Card>
+  <Card className="bg-gradient-to-br from-white to-purple-50/30 dark:from-gray-900 dark:to-purple-950/30">
     <CardHeader className="pb-3">
       <CardTitle className="text-lg">Active Swarm</CardTitle>
     </CardHeader>
@@ -247,10 +246,10 @@ const SwarmSwitcher: React.FC<SwarmSwitcherProps> = ({ selectedSwarm, onSwarmCha
       </Select>
       
       {selectedSwarm && (
-        <div className="mt-3 p-3 bg-purple-50 rounded-lg">
+        <div className="mt-3 p-3 bg-gradient-to-r from-purple-50 to-purple-100 dark:from-purple-950/50 dark:to-purple-900/50 rounded-lg border border-purple-200/50">
           <div className="flex items-center gap-2 text-sm">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-            <span className="text-purple-700 font-medium">Connected to {selectedSwarm}</span>
+            <span className="text-purple-700 dark:text-purple-300 font-medium">Connected to {selectedSwarm}</span>
           </div>
         </div>
       )}
@@ -271,7 +270,7 @@ const AgentList: React.FC<AgentListProps> = ({ agents, searchQuery, onSearchChan
   );
 
   return (
-    <Card className="h-full">
+    <Card className="h-full bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-900 dark:to-blue-950/30">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg flex items-center gap-2">
@@ -294,9 +293,9 @@ const AgentList: React.FC<AgentListProps> = ({ agents, searchQuery, onSearchChan
 
         <div className="space-y-3 max-h-80 overflow-y-auto">
           {filteredAgents.map(agent => (
-            <div key={agent.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-accent/50 transition-colors">
+            <div key={agent.id} className="flex items-center justify-between p-3 border rounded-lg hover:bg-purple-50/50 dark:hover:bg-purple-950/30 transition-all duration-200 hover:shadow-md">
               <div className="flex items-center space-x-3">
-                <div className={`w-3 h-3 rounded-full ${mapStatusToBg(agent.status)}`}></div>
+                <div className={`w-3 h-3 rounded-full ${mapStatusToBg(agent.status)} shadow-sm`}></div>
                 <div>
                   <p className="font-medium">{agent.name}</p>
                   <p className="text-xs text-muted-foreground">{agent.type}</p>
@@ -338,7 +337,7 @@ const RecentActivity: React.FC<RecentActivityProps> = ({ activity }) => {
   };
 
   return (
-    <Card className="h-full">
+    <Card className="h-full bg-gradient-to-br from-white to-orange-50/30 dark:from-gray-900 dark:to-orange-950/30">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg flex items-center gap-2">
           <Activity className="w-5 h-5" />
@@ -348,7 +347,7 @@ const RecentActivity: React.FC<RecentActivityProps> = ({ activity }) => {
       <CardContent>
         <div className="space-y-3 max-h-80 overflow-y-auto">
           {activity.map(event => (
-            <div key={event.id} className="flex items-start space-x-3 p-3 border-l-2 border-l-purple-200 hover:bg-accent/30 rounded-r-lg transition-colors">
+            <div key={event.id} className="flex items-start space-x-3 p-3 border-l-2 border-l-purple-200 hover:bg-purple-50/50 dark:hover:bg-purple-950/30 rounded-r-lg transition-all duration-200 hover:shadow-sm">
               {getActivityIcon(event.type)}
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium">{event.event}</p>
@@ -373,31 +372,31 @@ const RecentActivity: React.FC<RecentActivityProps> = ({ activity }) => {
 };
 
 const QuickActions: React.FC = () => (
-  <Card>
+  <Card className="bg-gradient-to-br from-white to-indigo-50/30 dark:from-gray-900 dark:to-indigo-950/30">
     <CardHeader className="pb-3">
       <CardTitle className="text-lg">Quick Actions</CardTitle>
     </CardHeader>
     <CardContent>
       <div className="space-y-3">
-        <Button asChild className="w-full justify-start" variant="default">
+        <Button asChild className="w-full justify-start bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg hover:shadow-purple-500/25" variant="default">
           <Link to="/workflow-builder">
             <Workflow className="w-4 h-4 mr-2" />
             Workflow Builder
           </Link>
         </Button>
-        <Button asChild className="w-full justify-start" variant="outline">
+        <Button asChild className="w-full justify-start border-purple-200 hover:bg-purple-50 dark:hover:bg-purple-950/30" variant="outline">
           <Link to="/agents">
             <Users className="w-4 h-4 mr-2" />
             Agent Directory
           </Link>
         </Button>
-        <Button asChild className="w-full justify-start" variant="outline">
+        <Button asChild className="w-full justify-start border-purple-200 hover:bg-purple-50 dark:hover:bg-purple-950/30" variant="outline">
           <Link to="/settings">
             <Settings className="w-4 h-4 mr-2" />
             Settings
           </Link>
         </Button>
-        <Button asChild className="w-full justify-start" variant="outline">
+        <Button asChild className="w-full justify-start border-purple-200 hover:bg-purple-50 dark:hover:bg-purple-950/30" variant="outline">
           <Link to="/activity">
             <Activity className="w-4 h-4 mr-2" />
             Activity Log
@@ -413,17 +412,19 @@ const Navigation: React.FC<{ onRefresh: () => void }> = ({ onRefresh }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-background/95 to-purple-50/20 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-purple-200/30 shadow-sm">
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild className="hover:bg-purple-100/50">
             <Link to="/dashboard">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Dashboard
             </Link>
           </Button>
           <div className="hidden md:flex items-center space-x-2">
-            <Network className="w-6 h-6 text-purple-600" />
+            <div className="p-2 bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg shadow-lg">
+              <Network className="w-5 h-5 text-white" />
+            </div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
               Swarm Control Panel
             </h1>
@@ -432,25 +433,25 @@ const Navigation: React.FC<{ onRefresh: () => void }> = ({ onRefresh }) => {
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild className="hover:bg-purple-100/50">
             <Link to="/dashboard">
               <Home className="w-4 h-4 mr-2" />
               Dashboard
             </Link>
           </Button>
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild className="hover:bg-purple-100/50">
             <Link to="/workflow-builder">
               <Workflow className="w-4 h-4 mr-2" />
               Workflows
             </Link>
           </Button>
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild className="hover:bg-purple-100/50">
             <Link to="/agents">
               <Users className="w-4 h-4 mr-2" />
               Agents
             </Link>
           </Button>
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild className="hover:bg-purple-100/50">
             <Link to="/settings">
               <Settings className="w-4 h-4 mr-2" />
               Settings
@@ -459,11 +460,12 @@ const Navigation: React.FC<{ onRefresh: () => void }> = ({ onRefresh }) => {
         </nav>
 
         <div className="flex items-center space-x-2">
-          <Button variant="ghost" size="sm" onClick={onRefresh}>
+          <Button variant="ghost" size="sm" onClick={onRefresh} className="hover:bg-purple-100/50">
             <RefreshCw className="w-4 h-4" />
           </Button>
-          <Button variant="ghost" size="sm">
+          <Button variant="ghost" size="sm" className="hover:bg-purple-100/50 relative">
             <Bell className="w-4 h-4" />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
           </Button>
           
           {/* Mobile Menu Button */}
@@ -480,27 +482,27 @@ const Navigation: React.FC<{ onRefresh: () => void }> = ({ onRefresh }) => {
       
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="md:hidden border-t bg-background/95 backdrop-blur">
+        <div className="md:hidden border-t border-purple-200/30 bg-gradient-to-r from-background/95 to-purple-50/20 backdrop-blur">
           <nav className="container py-4 space-y-2">
-            <Button variant="ghost" size="sm" asChild className="w-full justify-start">
+            <Button variant="ghost" size="sm" asChild className="w-full justify-start hover:bg-purple-100/50">
               <Link to="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>
                 <Home className="w-4 h-4 mr-2" />
                 Dashboard
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild className="w-full justify-start">
+            <Button variant="ghost" size="sm" asChild className="w-full justify-start hover:bg-purple-100/50">
               <Link to="/workflow-builder" onClick={() => setIsMobileMenuOpen(false)}>
                 <Workflow className="w-4 h-4 mr-2" />
                 Workflows
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild className="w-full justify-start">
+            <Button variant="ghost" size="sm" asChild className="w-full justify-start hover:bg-purple-100/50">
               <Link to="/agents" onClick={() => setIsMobileMenuOpen(false)}>
                 <Users className="w-4 h-4 mr-2" />
                 Agents
               </Link>
             </Button>
-            <Button variant="ghost" size="sm" asChild className="w-full justify-start">
+            <Button variant="ghost" size="sm" asChild className="w-full justify-start hover:bg-purple-100/50">
               <Link to="/settings" onClick={() => setIsMobileMenuOpen(false)}>
                 <Settings className="w-4 h-4 mr-2" />
                 Settings
@@ -709,7 +711,7 @@ export default function SwarmControlPanel() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-purple-50/30">
+    <div className="min-h-screen bg-gradient-to-br from-background via-purple-50/10 to-purple-100/20">
       {/* Navigation */}
       <Navigation onRefresh={fetchSwarmData} />
 
@@ -718,12 +720,14 @@ export default function SwarmControlPanel() {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Swarm Control Panel</h1>
+            <h1 className="text-3xl font-bold tracking-tight bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+              Swarm Control Panel
+            </h1>
             <p className="text-muted-foreground">Monitor and manage your agent swarms in real-time</p>
           </div>
           
           {selectedSwarm && swarmData && (
-            <div className="flex items-center gap-2 px-4 py-2 bg-green-50 border border-green-200 rounded-lg">
+            <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-lg shadow-sm">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
               <span className="text-sm font-medium text-green-700">
                 Live monitoring: {swarmData.metrics.activeAgents} agents active
@@ -752,7 +756,7 @@ export default function SwarmControlPanel() {
 
         {/* Error State */}
         {error && (
-          <Card className="border-red-200 bg-red-50">
+          <Card className="border-red-200 bg-gradient-to-r from-red-50 to-red-100/50">
             <CardContent className="p-6">
               <div className="flex items-center space-x-3">
                 <AlertCircle className="w-6 h-6 text-red-500" />
@@ -767,7 +771,7 @@ export default function SwarmControlPanel() {
 
         {/* No Swarm Selected */}
         {!loading && !selectedSwarm && (
-          <Card className="border-dashed border-2">
+          <Card className="border-dashed border-2 border-purple-300/50 bg-gradient-to-br from-white to-purple-50/30">
             <CardContent className="p-12 text-center">
               <Network className="w-16 h-16 text-muted-foreground mx-auto mb-4 opacity-50" />
               <h3 className="text-xl font-semibold mb-2">No Swarm Selected</h3>
@@ -775,6 +779,7 @@ export default function SwarmControlPanel() {
                 Select a swarm from the dropdown above to view its real-time dashboard and metrics.
               </p>
               <Button onClick={() => navigate('/workflow-builder')}>
+              <Button onClick={() => navigate('/workflow-builder')} className="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white shadow-lg hover:shadow-purple-500/25">
                 <Workflow className="w-4 h-4 mr-2" />
                 Create New Workflow
               </Button>
@@ -844,10 +849,12 @@ export default function SwarmControlPanel() {
               <RecentActivity activity={swarmData.activity} />
 
               {/* Performance Metrics */}
-              <Card>
+              <Card className="bg-gradient-to-br from-white to-blue-50/30 dark:from-gray-900 dark:to-blue-950/30">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-lg flex items-center gap-2">
-                    <Server className="w-5 h-5" />
+                    <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg text-white">
+                      <Server className="w-4 h-4" />
+                    </div>
                     Performance Metrics
                   </CardTitle>
                 </CardHeader>
