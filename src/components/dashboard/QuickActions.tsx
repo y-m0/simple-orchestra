@@ -10,6 +10,7 @@ import {
   Users, 
   FolderOpen, 
   Clock,
+  Network,
   Plus,
   Play,
   Pause,
@@ -41,6 +42,13 @@ const primaryActions: QuickAction[] = [
     icon: Users,
     color: 'bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700',
     badge: 'New'
+  },
+  {
+    title: 'Swarm Control',
+    description: 'Monitor and control agent swarms',
+    href: '/swarm',
+    icon: Network,
+    color: 'bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700'
   }
 ];
 

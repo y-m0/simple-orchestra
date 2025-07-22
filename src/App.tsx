@@ -21,6 +21,7 @@ const Settings = lazy(() => import('@/pages/Settings'));
 const ActivityLog = lazy(() => import('@/pages/ActivityLog'));
 const AgentDirectory = lazy(() => import('@/pages/AgentDirectory'));
 const ApprovalsInbox = lazy(() => import('@/pages/ApprovalsInbox'));
+const SwarmControlPanel = lazy(() => import('@/pages/SwarmControlPanel'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 // Loading component with better accessibility
@@ -106,6 +107,12 @@ function App() {
                   <Route path="/approvals" element={
                     <ProtectedRoute>
                       <ApprovalsInbox />
+                    </ProtectedRoute>
+                  } />
+                  
+                  <Route path="/swarm" element={
+                    <ProtectedRoute>
+                      <SwarmControlPanel />
                     </ProtectedRoute>
                   } />
                   

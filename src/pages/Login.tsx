@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Separator } from "@/components/ui/separator";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { useAuth } from "@/lib/auth";
-import { LayoutDashboard, Workflow, Activity, Settings } from "lucide-react";
+import { LayoutDashboard, Workflow, Activity, Settings, Network } from "lucide-react";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
@@ -95,6 +95,16 @@ export default function Login() {
                 />
                 <div className="text-purple-400 font-medium group-hover:text-purple-300 transition-colors">Settings</div>
                 <div className="text-muted-foreground mt-1 text-xs">Data connections & API keys</div>
+              </Link>
+              <Link 
+                to="/swarm" 
+                className="p-3 border border-border/50 rounded-md hover:bg-accent/50 transition-colors text-center flex flex-col items-center justify-center space-y-2 group col-span-2"
+              >
+                <Network 
+                  className="h-6 w-6 text-purple-400 group-hover:text-purple-300 transition-colors" 
+                />
+                <div className="text-purple-400 font-medium group-hover:text-purple-300 transition-colors">Swarm Control</div>
+                <div className="text-muted-foreground mt-1 text-xs">Monitor agent swarms</div>
               </Link>
             </div>
           </CardContent>
