@@ -11,7 +11,7 @@ export function getSummarizer(): AgentTool {
     enabled: true,
     requiresConfig: false,
     run: async (text: string, context?: any): Promise<ToolResult> => {
-      logToConsole(`Summarizing text: ${text.substring(0, 50)}...`, 'info', { tool: 'text-summarizer' });
+      logToConsole(`Summarizing text: ${text.substring(0, 50)}...`, 'info');
       
       // This would use an LLM API in production
       await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate API delay

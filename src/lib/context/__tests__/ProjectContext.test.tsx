@@ -203,7 +203,7 @@ describe('ProjectContext', () => {
   it('should handle project selection', () => {
     const { result } = renderHook(() => useProject(), { wrapper });
 
-    let project: Project;
+    let project: Project | undefined;
     act(() => {
       project = result.current.createProject({
         name: 'Test Project',
@@ -218,7 +218,9 @@ describe('ProjectContext', () => {
     });
 
     act(() => {
-      result.current.setSelectedProject(project);
+      if (project) {
+        result.current.setSelectedProject(project);
+      }
     });
 
     expect(result.current.selectedProject).toBe(project);

@@ -15,7 +15,7 @@ const SimpleAuthContext = createContext<SimpleAuthContextType | undefined>(undef
 export function SimpleAuthProvider({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<{ id: string; email: string; name: string } | null>(null);
 
   const login = async (credentials: any) => {
     setLoading(true);

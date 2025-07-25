@@ -167,7 +167,7 @@ interface WorkflowState {
 
 export const useWorkflowStore = create<WorkflowState>()(
   persist(
-    (set: any) => ({
+    (set) => ({
       workflows: [],
       selectedWorkflow: null,
       llmNodes: [],

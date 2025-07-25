@@ -17,7 +17,7 @@ export function getWebSearch(): AgentTool {
     },
     run: async (query: string, context?: any): Promise<ToolResult> => {
       // This would make a real API call to a search service in production
-      logToConsole(`Performing web search for: ${query}`, 'info', { tool: 'web-search' });
+      logToConsole(`Performing web search for: ${query}`, 'info');
       
       // Mock search results
       await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay

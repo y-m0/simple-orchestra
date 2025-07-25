@@ -56,7 +56,7 @@ export const GoalItem: FC<GoalItemProps> = ({ goal, onEdit, onLinkToWorkflow }) 
       >
         <div className="flex items-center gap-1 text-sm text-muted-foreground">
           <Calendar className="h-3.5 w-3.5" />
-          <span>Created {formatDateTime(goal.createdAt, 'relative')}</span>
+          <span>Created {formatDateTime(goal.createdAt)}</span>
         </div>
         
         {goal.tags && goal.tags.length > 0 && (

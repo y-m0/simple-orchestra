@@ -66,7 +66,7 @@ class ApiClient {
       });
     }
 
-    const requestHeaders = {
+    const requestHeaders: Record<string, string> = {
       'Content-Type': 'application/json',
       ...this.config.headers,
       ...headers,
@@ -87,7 +87,7 @@ class ApiClient {
       requestInit.body = JSON.stringify(data);
     }
 
-    let lastError: Error | null = null;
+    let lastError: Error | undefined = undefined;
 
     for (let attempt = 0; attempt <= retries; attempt++) {
       try {
@@ -97,13 +97,13 @@ class ApiClient {
         if (response.status === 401) {
           this.authToken = null;
           this.config.onUnauthorized();
-          throw new ApiError('UNAUTHORIZED', 'Authentication required', { statusCode: 401 });
+          throw createApiError('UNAUTHORIZED', 'Authentication required', { statusCode: 401 });
         }
 
         // Handle other HTTP errors
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          throw new ApiError(
+          throw createApiError(
             errorData.code || 'HTTP_ERROR',
             errorData.message || `HTTP ${response.status}: ${response.statusText}`,
             { statusCode: response.status, ...errorData.details }
@@ -115,7 +115,7 @@ class ApiClient {
 
         // Validate response structure if required
         if (validateResponse && !this.isValidApiResponse(responseData)) {
-          throw new ApiError('INVALID_RESPONSE', 'Invalid API response format');
+          throw createApiError('INVALID_RESPONSE', 'Invalid API response format');
         }
 
         return responseData as ApiResponse<T>;
@@ -123,9 +123,9 @@ class ApiClient {
         lastError = error instanceof Error ? error : new Error(String(error));
 
         // Don't retry on auth errors or client errors (4xx)
-        if (error instanceof ApiError && error.statusCode && error.statusCode < 500) {
-          this.config.onError(error);
-          throw error;
+        if (lastError && 'statusCode' in lastError && (lastError as any).statusCode < 500) {
+          this.config.onError(createApiError(lastError.message, (lastError as any).statusCode));
+          throw lastError;
         }
 
         // Don't retry on last attempt
@@ -139,9 +139,9 @@ class ApiClient {
     }
 
     // Create final error
-    const finalError = lastError instanceof ApiError 
-      ? lastError 
-      : new ApiError('NETWORK_ERROR', 'Request failed after retries', { originalError: lastError });
+    const finalError = lastError && 'statusCode' in lastError
+      ? createApiError('API_ERROR', lastError.message, { statusCode: (lastError as any).statusCode })
+      : createApiError('NETWORK_ERROR', 'Request failed after retries', { statusCode: 500 });
     
     this.config.onError(finalError);
     throw finalError;
@@ -178,25 +178,19 @@ class ApiClient {
   }
 }
 
-// Custom error class
-class ApiError extends Error {
-  public code: string;
-  public statusCode?: number;
-  public details?: Record<string, unknown>;
-  public originalError?: Error;
-
-  constructor(
-    code: string,
-    message: string,
-    options: { statusCode?: number; details?: Record<string, unknown>; originalError?: Error } = {}
-  ) {
-    super(message);
-    this.name = 'ApiError';
-    this.code = code;
-    this.statusCode = options.statusCode;
-    this.details = options.details;
-    this.originalError = options.originalError;
-  }
+// Helper function to create ApiError objects
+function createApiError(
+  code: string,
+  message: string,
+  options: { statusCode?: number; details?: Record<string, unknown>; originalError?: Error } = {}
+): ApiError {
+  const error = new Error(message) as ApiError;
+  error.name = 'ApiError';
+  error.code = code;
+  error.statusCode = options.statusCode;
+  error.details = options.details;
+  error.originalError = options.originalError;
+  return error;
 }
 
 // API endpoints configuration
@@ -268,4 +262,5 @@ export const apiClient = new ApiClient({
   },
 });
 
-export { ApiError, endpoints };
+export type { ApiError };
+export { endpoints };

@@ -205,7 +205,7 @@ export default function ProjectDetail() {
                   <Calendar className="h-4 w-4" />
                   <span>Created</span>
                 </div>
-                <span>{formatDateTime(project.createdAt, 'short')}</span>
+                <span>{formatDateTime(project.createdAt)}</span>
               </div>
               
               <div className="flex items-center justify-between">
@@ -213,7 +213,7 @@ export default function ProjectDetail() {
                   <Calendar className="h-4 w-4" />
                   <span>Updated</span>
                 </div>
-                <span>{formatDateTime(project.updatedAt, 'short')}</span>
+                <span>{formatDateTime(project.updatedAt)}</span>
               </div>
               
               <div className="flex items-center justify-between">

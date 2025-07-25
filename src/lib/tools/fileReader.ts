@@ -15,7 +15,7 @@ export function getFileReader(): AgentTool {
       maxFileSizeMb: 10
     },
     run: async (filePath: string, context?: any): Promise<ToolResult> => {
-      logToConsole(`Reading file: ${filePath}`, 'info', { tool: 'file-reader' });
+      logToConsole(`Reading file: ${filePath}`, 'info');
       
       // This would actually read a file in production
       await new Promise(resolve => setTimeout(resolve, 800)); // Simulate file processing

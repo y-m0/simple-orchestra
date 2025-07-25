@@ -48,7 +48,7 @@ export const ProjectCard: FC<ProjectCardProps> = ({ project, onEdit }) => {
         
         <div className="flex items-center gap-1 text-sm text-muted-foreground">
           <Calendar className="h-3.5 w-3.5" />
-          <span>Updated {formatDateTime(project.updatedAt, 'relative')}</span>
+          <span>Updated {formatDateTime(project.updatedAt)}</span>
         </div>
 
         {project.tags && project.tags.length > 0 && (

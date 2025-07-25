@@ -19,7 +19,7 @@ const TestComponent = () => {
       <div data-testid="loading">{loading ? 'Loading' : 'Not Loading'}</div>
       <div data-testid="authenticated">{isAuthenticated ? 'Authenticated' : 'Not Authenticated'}</div>
       <div data-testid="user">{user ? user.email : 'No User'}</div>
-      <div data-testid="error">{error || 'No Error'}</div>
+      <div data-testid="error">{error ? error.toString() : 'No Error'}</div>
     </div>
   )
 }

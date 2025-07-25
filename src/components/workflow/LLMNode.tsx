@@ -38,7 +38,8 @@ export const LLMNode: React.FC<LLMNodeProps> = ({ node, onDelete }) => {
 
     try {
       const executor = LLMExecutor.getInstance();
-      const result = await executor.execute(node, input);
+      const executionInput = { prompt: input };
+      const result = await executor.execute(node, executionInput);
 
       if (result.success) {
         setOutput(result.output);
@@ -46,7 +47,7 @@ export const LLMNode: React.FC<LLMNodeProps> = ({ node, onDelete }) => {
           status: 'success',
           lastExecution: {
             timestamp: new Date().toISOString(),
-            input,
+            input: executionInput,
             output: result.output,
             duration: result.duration,
           },

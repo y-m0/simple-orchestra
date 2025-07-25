@@ -29,7 +29,7 @@ class AuthService {
       const mockUser = mockUsers.get(email);
 
       if (!mockUser || mockUser.password !== credentials.password) {
-        throw new AuthError('INVALID_CREDENTIALS', 'Invalid email or password');
+        throw createAuthError('INVALID_CREDENTIALS', 'Invalid email or password');
       }
 
       // Create mock session
@@ -94,7 +94,7 @@ class AuthService {
     }
 
     // Invalid demo credentials
-    throw new AuthError('INVALID_CREDENTIALS', 'Invalid email or password. Use test@example.com / password for demo.');
+    throw createAuthError('INVALID_CREDENTIALS', 'Invalid email or password. Use test@example.com / password for demo.');
   }
 
   async signup(credentials: SignupCredentials): Promise<void> {
@@ -105,7 +105,7 @@ class AuthService {
       const email = credentials.email.toLowerCase().trim();
       
       if (mockUsers.has(email)) {
-        throw new AuthError('EMAIL_EXISTS', 'An account with this email already exists');
+        throw createAuthError('EMAIL_EXISTS', 'An account with this email already exists');
       }
 
       // Add new user to mock database
@@ -120,7 +120,7 @@ class AuthService {
       if (error instanceof AuthError) {
         throw error;
       }
-      throw new AuthError('NETWORK_ERROR', 'Account creation failed');
+      throw createAuthError('NETWORK_ERROR', 'Account creation failed');
     }
   }
 
@@ -138,7 +138,7 @@ class AuthService {
   async refreshToken(): Promise<AuthSession> {
     const session = this.getStoredSession();
     if (!session?.refresh_token) {
-      throw new AuthError('NO_REFRESH_TOKEN', 'No refresh token available');
+      throw createAuthError('NO_REFRESH_TOKEN', 'No refresh token available');
     }
 
     // Handle demo session refresh
@@ -177,7 +177,7 @@ class AuthService {
       if (error instanceof AuthError) {
         throw error;
       }
-      throw new AuthError('NETWORK_ERROR', 'Failed to refresh authentication token');
+      throw createAuthError('NETWORK_ERROR', 'Failed to refresh authentication token');
     }
   }
 
@@ -203,23 +203,23 @@ class AuthService {
 
   private validateSession(data: unknown): AuthSession {
     if (!data || typeof data !== 'object') {
-      throw new AuthError('INVALID_RESPONSE', 'Invalid authentication response');
+      throw createAuthError('INVALID_RESPONSE', 'Invalid authentication response');
     }
 
     const session = data as Record<string, unknown>;
     
     if (!session.access_token || typeof session.access_token !== 'string') {
-      throw new AuthError('INVALID_RESPONSE', 'Missing access token');
+      throw createAuthError('INVALID_RESPONSE', 'Missing access token');
     }
 
     if (!session.user || typeof session.user !== 'object') {
-      throw new AuthError('INVALID_RESPONSE', 'Missing user data');
+      throw createAuthError('INVALID_RESPONSE', 'Missing user data');
     }
 
     const user = session.user as Record<string, unknown>;
     
     if (!user.id || !user.email) {
-      throw new AuthError('INVALID_RESPONSE', 'Invalid user data');
+      throw createAuthError('INVALID_RESPONSE', 'Invalid user data');
     }
 
     return {
@@ -271,17 +271,13 @@ class AuthService {
   }
 }
 
-// Custom error class for authentication errors
-class AuthError extends Error {
-  public code: string;
-  public details?: Record<string, unknown>;
-
-  constructor(code: string, message: string, details?: Record<string, unknown>) {
-    super(message);
-    this.name = 'AuthError';
-    this.code = code;
-    this.details = details;
-  }
+// Helper function to create AuthError objects
+function createAuthError(code: string, message: string, details?: Record<string, unknown>): AuthError {
+  const error = new Error(message) as AuthError;
+  error.name = 'AuthError';
+  error.code = code;
+  error.details = details;
+  return error;
 }
 
 // Export configured service instance

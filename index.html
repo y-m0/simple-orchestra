@@ -5,9 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Orchestra - Intelligent Workflow Automation</title>
     <meta name="description" content="Build, deploy, and manage hybrid human-AI workflows with a powerful visual orchestration platform." />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- DNS prefetch for potential API calls -->
+    <link rel="dns-prefetch" href="https://api.simple-orchestra.com">
+    
+    <!-- Theme color for mobile browsers -->
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    
+    <!-- PWA manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Apple touch icon -->
+    <link rel="apple-touch-icon" href="/icon.svg">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    
+    <!-- Prevent FOUC (Flash of Unstyled Content) -->
+    <style>
+      body { opacity: 0; transition: opacity 0.3s; }
+      body.loaded { opacity: 1; }
+    </style>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Mark body as loaded when DOM is ready
+      document.addEventListener('DOMContentLoaded', () => {
+        document.body.classList.add('loaded');
+      });
+    </script>
+    
+    <!-- Noscript fallback -->
+    <noscript>
+      <style>body { opacity: 1 !important; }</style>
+      <div style="padding: 2rem; text-align: center;">
+        <h1>JavaScript Required</h1>
+        <p>This application requires JavaScript to be enabled. Please enable JavaScript in your browser settings and reload the page.</p>
+      </div>
+    </noscript>
   </body>
 </html>

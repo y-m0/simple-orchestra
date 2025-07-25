@@ -3,11 +3,12 @@ import { useCallback } from 'react';
 import { useStore } from '@/lib/store';
 import { toast } from '@/components/ui/use-toast';
 import type { Activity } from '@/lib/store';
+import type { WorkflowNode } from '@/types/workflow';
 
 interface UseWorkflowControlProps {
   isRunning: boolean;
   setIsRunning: (running: boolean) => void;
-  updateNodeStatus: (nodeId: string, status: string) => void;
+  updateNodeStatus: (nodeId: string, status: WorkflowNode['status']) => void;
   setWorkflowRuns: (runs: any[]) => void;
 }
 
@@ -22,7 +23,7 @@ export const useWorkflowControl = ({
   const stopWorkflow = useCallback(() => {
     setIsRunning(false);
     // Update all nodes to stopped status
-    updateNodeStatus('*', 'stopped');
+    updateNodeStatus('*', 'idle');
     
     // Add to activity log
     setActivities((prev: Activity[]) => [...prev, {
@@ -43,7 +44,7 @@ export const useWorkflowControl = ({
   const pauseWorkflow = useCallback(() => {
     setIsRunning(false);
     // Update all nodes to paused status
-    updateNodeStatus('*', 'paused');
+    updateNodeStatus('*', 'idle');
     
     // Add to activity log
     setActivities((prev: Activity[]) => [...prev, {
@@ -84,7 +85,7 @@ export const useWorkflowControl = ({
 
   const approveHumanTask = useCallback((taskId: string) => {
     // Update the specific task node to approved status
-    updateNodeStatus(taskId, 'approved');
+    updateNodeStatus(taskId, 'completed');
     
     // Add to activity log
     setActivities((prev: Activity[]) => [...prev, {
@@ -104,7 +105,7 @@ export const useWorkflowControl = ({
 
   const rejectHumanTask = useCallback((taskId: string) => {
     // Update the specific task node to rejected status
-    updateNodeStatus(taskId, 'rejected');
+    updateNodeStatus(taskId, 'error');
     
     // Add to activity log
     setActivities((prev: Activity[]) => [...prev, {

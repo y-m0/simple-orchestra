@@ -16,7 +16,7 @@ export function getApiFetcher(): AgentTool {
       maxRetries: 3
     },
     run: async (endpoint: string, context?: any): Promise<ToolResult> => {
-      logToConsole(`Fetching API: ${endpoint}`, 'info', { tool: 'api-fetcher' });
+      logToConsole(`Fetching API: ${endpoint}`, 'info');
       
       // Parse JSON context if provided
       let body = undefined;
